@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+<div id="header" style="background-image:url(@CurrentPage.uploadBanner.Url)">
+					<!-- Inner -->
+						<div class="inner">
+							<header>
+								<h1><a href="index.html" id="logo">@Umbraco.Field("bannerTitle", recursive: true)</a></h1>
+								<hr />
+								<p>@Umbraco.Field("bannerDescription", recursive: true)</p>
+							</header>
+							<footer>
+								<a href="#banner" class="button circled scrolly">@Umbraco.Field("bannerButtonText", recursive: true)</a>
+							</footer>
+						</div>
+
+				 @{ Html.RenderPartial("umbMenu"); }
+
+				</div>
