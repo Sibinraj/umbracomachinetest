@@ -1,5 +1,79 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.News>
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
-	Layout = null;
+    Layout = "Master.cshtml";
 }
+
+<!-- Main -->
+<div class="wrapper style1">
+
+    <div class="container">
+        <div class="row gtr-200">
+            <div class="col-8 col-12-mobile" id="content">
+                <article id="main">
+                    <header>
+                        <h2><a href="#">@CurrentPage.newsTitle</a></h2>
+
+                    </header>
+                    <a href="#" class="image featured">
+                        <img src=" @CurrentPage.newsImage.Url" alt="" /></a>
+                    <p>
+                        @CurrentPage.newsDescription
+                    </p>
+                </article>
+            </div>
+            <div class="col-4 col-12-mobile" id="sidebar">
+                <hr class="first" />
+
+                <section>
+                    <header>
+                        <h3><a href="#">Related News</a></h3>
+                    </header>
+                    <p>
+                        Tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
+                    </p>
+                    <div class="row gtr-50">
+                        @{ var RelatedNews = Umbraco.Content(1087).Children.Take(5);
+                           foreach (var item in RelatedNews)
+                           {
+                            <div class="col-4">
+                                <a href="@item.Url" class="image fit">
+                                    <img src="@item.newsImage.Url" alt="" /></a>
+                            </div>
+                            <div class="col-8">
+                                <h4>@item.newsTitle</h4>
+                                <p>
+                                   @Umbraco.Truncate(item.newsDescription, 50)
+                                </p>
+                            </div>
+                           }
+                        }
+                    </div>
+                    <footer>
+                        <a href="#" class="button">Read More</a>
+                    </footer>
+                </section>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            @{ var FeaturedNews = Umbraco.Content(1087).Children.Where("isFeatured");
+               foreach (var item in FeaturedNews)
+               {
+                  
+                <article class="col-4 col-12-mobile special">
+                    <a href="@item.Url" class="image featured">
+                        <img src="@item.newsImage.Url" alt="" /></a>
+                    <header>
+                        <h3><a href="@item.Url">@item.newsTitle</a></h3>
+                    </header>
+                    <p>
+                        @Umbraco.Truncate(item.newsDescription, 200)
+                    </p>
+                </article>  
+               }
+            }
+        </div>
+    </div>
+
+</div>

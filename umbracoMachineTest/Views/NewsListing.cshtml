@@ -35,7 +35,7 @@
                         <h3><a href="@item.Url">@item.newsTitle</a></h3>
                     </header>
                     <p>
-                        @item.newsDescription
+                        @Umbraco.Truncate(item.newsDescription, 200)
                     </p>
                 </article>    
                 }
