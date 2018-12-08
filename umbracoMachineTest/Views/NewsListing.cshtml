@@ -1,6 +1,18 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
-	Layout = "Master.cshtml";
+    Layout = "Master.cshtml";
+    var selection = CurrentPage.Children.OrderBy("newsTitle");
+    var pageSize = 6;
+    var page = 1; int.TryParse(Request.QueryString["page"], out page);
+    var totalPages = (int)Math.Ceiling((double)selection.Count() / (double)pageSize);
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    } 
 }
 
 @* the fun starts here *@
@@ -8,55 +20,37 @@
 
     <section id="features" class="container special">
         <header>
-            <h2>Morbi ullamcorper et varius leo lacus</h2>
-            <p>Ipsum volutpat consectetur orci metus consequat imperdiet duis integer semper magna.</p>
+            <h2>@CurrentPage.contentTitle</h2>
+            <p>@CurrentPage.contentDescription</p>
         </header>
         <div class="row">
-            <article class="col-4 col-12-mobile special">
-                <a href="#" class="image featured">
-                    <img src="images/pic07.jpg" alt="" /></a>
-                <header>
-                    <h3><a href="#">Gravida aliquam penatibus</a></h3>
-                </header>
-                <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-                </p>
-            </article>
-            <article class="col-4 col-12-mobile special">
-                <a href="#" class="image featured">
-                    <img src="images/pic08.jpg" alt="" /></a>
-                <header>
-                    <h3><a href="#">Sed quis rhoncus placerat</a></h3>
-                </header>
-                <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-                </p>
-            </article>
-            <article class="col-4 col-12-mobile special">
-                <a href="#" class="image featured">
-                    <img src="images/pic09.jpg" alt="" /></a>
-                <header>
-                    <h3><a href="#">Magna laoreet et aliquam</a></h3>
-                </header>
-                <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-                </p>
-            </article>
-             <article class="col-4 col-12-mobile special">
-                <a href="#" class="image featured">
-                    <img src="images/pic07.jpg" alt="" /></a>
-                <header>
-                    <h3><a href="#">Gravida aliquam penatibus</a></h3>
-                </header>
-                <p>
-                    Amet nullam fringilla nibh nulla convallis tique ante proin sociis accumsan lobortis. Auctor etiam
-									porttitor phasellus tempus cubilia ultrices tempor sagittis. Nisl fermentum consequat integer interdum.
-                </p>
-            </article>
+            @if (selection.Any())
+            {
+                foreach (var item in selection.Skip((page - 1) * pageSize).Take(pageSize))
+                {
+                <article class="col-4 col-12-mobile special">
+                    <a href="@item.Url" class="image featured">
+                        <img src="@item.newsImage.Url" alt="" /></a>
+                    <header>
+                        <h3><a href="@item.Url">@item.newsTitle</a></h3>
+                    </header>
+                    <p>
+                        @item.newsDescription
+                    </p>
+                </article>    
+                }
+            }
         </div>
+       
+        @for (int p = 1; p < totalPages + 1; p++)
+        {
+            var active = (p == page) ? " class=\"active\"" : string.Empty;
+            if (String.IsNullOrEmpty(Request.QueryString["param"]) && String.IsNullOrEmpty(Request.QueryString["keyword"]))
+            {
+            <a  @(Html.Raw(active)) href="?page=@p">@p</a>
+            }
+        }
+
     </section>
 
 </div>
