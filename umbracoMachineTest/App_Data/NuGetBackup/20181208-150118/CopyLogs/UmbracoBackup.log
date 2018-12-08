@@ -1,0 +1,26 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : 08/12/2018 03:01:18 PM
+   Source : F:\UmbracoTest\MachineTest\umbracoMachineTest\Umbraco\
+     Dest : F:\UmbracoTest\MachineTest\umbracoMachineTest\App_Data\NuGetBackup\20181208-150118\Umbraco\
+
+    Files : *.*
+	    
+  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
+
+------------------------------------------------------------------------------
+
+	                   0	F:\UmbracoTest\MachineTest\umbracoMachineTest\Umbraco\
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         1         0         0         0         0         0
+   Files :         0         0         0         0         0         0
+   Bytes :         0         0         0         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+   Ended : 08/12/2018 03:01:18 PM
+
